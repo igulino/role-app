@@ -1,0 +1,4 @@
+Request  -> "Os dados estão corretos para entrar?"
+Service  -> "O que o sistema deve fazer com esses dados?"
+Controller -> "Recebe a chamada e coordena o fluxo."
+Model -> "Representa e interage com a tabela."

@@ -1,0 +1,7 @@
+Na Request você coloca:
+
+    validação dos campos;
+    mensagens de erro;
+    autorização básica da ação;
+    preparação/normalização simples dos dados;
+    retorno dos dados validados com $request->validated().
