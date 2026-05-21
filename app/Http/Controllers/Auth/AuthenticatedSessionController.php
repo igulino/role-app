@@ -8,9 +8,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 use App\Http\Services\LoginService;
+use App\Models\User;
 
 
 class AuthenticatedSessionController extends Controller
@@ -23,23 +25,34 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
     
+    
 
     /**
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $CountDateUsers;
-        
+     
         $request->ensureIsNotRateLimited();
         $LoginService = new LoginService;
         $LoginService->authenticate($request);
 
         $request->session()->regenerate();
 
-        
+        $user = $request->user();
+        Log::info("userrole: " . $user->role);
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Gate::forUser($user)->allows('accessUserDashboard', User::class)) {
+            Log::info("this is user");
+            return redirect()->intended(RouteServiceProvider::HOMEuser);
+        }
+
+        if (Gate::forUser($user)->allows('accessAdminDashboard', User::class)) {
+            Log::info("ITS A ADMIN");
+            return redirect()->intended(RouteServiceProvider::HOMEadmin);
+        }
+
+        abort(403);
     }
 
     /**

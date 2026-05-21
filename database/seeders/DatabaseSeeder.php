@@ -12,8 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(4)->create();
-    /*
+       // User::factory()->count(4)->create();
         \App\Models\User::create([
             'name' => 'supremo',
             'email' => 'User@example.com',
@@ -21,6 +20,5 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'genitor' => true,
         ]);
-    */
     }
 }

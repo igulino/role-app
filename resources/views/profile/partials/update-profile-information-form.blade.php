@@ -8,14 +8,25 @@
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
-
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+     @php
+            $Route;
+            
+            if($user->id != $RequestBy){
+                $Route = 'profile.updateAdm';
+            }else {
+                $Route = 'profile.update';
+            };
+    @endphp
+    <form id="send-verification" method="post" action="{{ route($Route) }}">
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route($Route) }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
+        @if ($Route === 'profile.updateAdm')
+            <input type="hidden" name="id" value="{{ $user->id }}">
+        @endif
 
         <div>
             <x-input-label for="name" :value="__('Name')" />

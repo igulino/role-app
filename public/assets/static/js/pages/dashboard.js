@@ -63,7 +63,7 @@ var optionsEurope = {
     
     series: [
         {
-            name: "series1",
+            name: "quantidade/mês",
             data: window.Data.series,
         },
     ],
@@ -76,7 +76,7 @@ var optionsEurope = {
     },
     colors: ["#5350e9"],
     stroke: {
-        width: 1,
+        width: 2,
     },
     grid: {
         show: false,
@@ -111,7 +111,7 @@ var optionsEurope = {
     },
     tooltip: {
         x: {
-            format: "dd/MM/yy HH:mm",
+            format: "dd/MM/yy",
         },
     },
 };
