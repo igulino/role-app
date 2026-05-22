@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules\Password;
+use App\Http\Requests\StoreUser;
 
 class ProfileRulesController extends Controller {
 
@@ -57,39 +58,48 @@ class ProfileRulesController extends Controller {
         ]);
 
         $user = User::findOrFail($validated['id']);
-
-        if ($this->authorize('UpdateAdmin', $request->user()) == true) {
-            $user->update([
-                'password' => Hash::make($validated['password'])
-            ]);
-            return back()->with('status', 'password-updated');
-        }else 
-
-        return back()->with('status', 'you are not a admin!');
+        
+        $this->authorize('updateByAdmin', $user);
+        
+        $user->update([
+            'password' => Hash::make($validated['password'])
+        ]);
+        return back()->with('status', 'password-updated');
+        
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroyAdm(Request $request)
     {
-        Log::info('destroyAdm chegou', $request->only(['id']));
+        Log::info('destroyAdm ', $request->only(['id']));
 
         $validated = $request->validateWithBag('userDeletion', [
             'id' => ['required', 'exists:users,id'],
             'password' => ['required', 'current_password'],
         ]);
       
-        Log::info("destroyAdm validou");
 
         $user = User::findOrFail($validated['id']);
+        $this->authorize('updateByAdmin', $user);
         
-        
-        if ($this->authorize('UpdateAdmin', $request->user()) == true) {
-            $user->delete();
-        }
-           
+        $user->delete();
         return Redirect::to('/dashboardAdm')->with('status', 'excluido!');
+    }
+
+    public function storeAdm(StoreUser $request) {
+        $validated = $request->validated();
+
+        $user = new User();
+
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'role' => 'user',
+            'genitor' => false
+        ]);
+
+        $user->save();
+        return Redirect::to('/dashboardAdm')->with('status', 'deu bom!');
     }
 
     public function UpdateGenitor() : Returntype {

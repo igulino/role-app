@@ -20,6 +20,6 @@ class DashboardService {
     }
 
     function AllUsers(): \Illuminate\Database\Eloquent\Collection {
-        return $this->user::query()->get(['created_at', 'role']);
+        return $this->user::query()->get(['name', 'created_at', 'role']);
     }
 }

@@ -28,14 +28,16 @@ Route::middleware('auth')->group(function () {
     //edit perfil próprio 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //edit adm -> users
-    Route::get('/profile/{user}', [ProfileRulesController::class, 'Quick'])->middleware('RoleVerification');
-    Route::patch('/profile/update', [ProfileRulesController::class, 'updateAdm'])->name('profile.updateAdm')->defaults('context', 'UserUpdate')->middleware('RoleVerification');
-    Route::put('/profile/password', [ProfileRulesController::class, 'updatePasswordAdm'])->name('password.updateAdm')->middleware('RoleVerification');
-    Route::delete('/profile/delete', [ProfileRulesController::class, 'destroyAdm'])->name('profile.destroyAdm')->middleware('RoleVerification');
+    Route::middleware('admin')->group(function () {
+        Route::get('/profile/{user}', [ProfileRulesController::class, 'Quick']);
+        Route::patch('/profile/update', [ProfileRulesController::class, 'updateAdm'])->name('profile.updateAdm')->defaults('context', 'UserUpdate');
+        Route::put('/profile/password', [ProfileRulesController::class, 'updatePasswordAdm'])->name('password.updateAdm');
+        Route::delete('/profile/delete', [ProfileRulesController::class, 'destroyAdm'])->name('profile.destroyAdm');
+        Route::post('/profile/store', [ProfileRulesController::class, 'storeAdm'])->name('profile.storeAdm');
+    });
     
 });
 

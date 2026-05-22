@@ -41,7 +41,10 @@ class UserPolicy
         }
 
         if ($target->role == 'admin') {
-            return Response::deny('um admin não pode editar outro admin');
+            if ($admin->genitor != true) {
+                return Response::deny('você não tem autorização para isso');
+            }
+            return Response::allow();
         }
 
         return Response::allow();
