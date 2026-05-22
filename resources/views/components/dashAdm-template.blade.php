@@ -305,12 +305,18 @@
                                         <h5 class="mb-0 ms-3">Users</h5>
                                     </div>
                                 </div>
-                               
+                               @php
+                                    $TotUsers = array_sum($CountDateUsers) + array_sum($CountDateAdmins);
+                                    $PercentUsers[0] = round((array_sum($CountDateUsers) * 100) / $TotUsers, 1);
+                                    $PercentUsers[1] = round((array_sum($CountDateAdmins) * 100) / $TotUsers, 1);
+                                    
+                               @endphp
                                 <script>
                                     window.DataUser = {
                                         series: @json($CountDateUsers),
+                                        seriesTot: @json($PercentUsers)
                                     }        
-                                    console.log("this is data: ", @json($CountDateUsers));
+                                    console.log("this is data: ", @json($PercentUsers));
                                     
                                 </script>
                                 <div class="col-5">

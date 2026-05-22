@@ -38,9 +38,9 @@ var optionsProfileVisit = {
     },
 };
 let optionsVisitorsProfile = {
-    series: [70, 30],
-    labels: ["Male", "Female"],
-    colors: ["#435ebe", "#55c6e8"],
+    series: window.DataUser.seriesTot,
+    labels: ["Users", "Admins"],
+    colors: ["#008b75", "#435ebe"],
     chart: {
         type: "donut",
         width: "100%",
