@@ -11,7 +11,7 @@ class DashboardService {
     }
     
     function DashUsersData(): \Illuminate\Contracts\Pagination\LengthAwarePaginator {
-        
+
         return $this->user::select(['name', 'created_at', 'role', 'id'])->paginate(5);
     }
 
