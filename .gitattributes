@@ -15,6 +15,9 @@
 node_modules/* linguist-vendored
 public/build/* linguist-generated
 
+public/build/* linguist-generated=true
+*.map linguist-generated=true
+
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
