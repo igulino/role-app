@@ -4,7 +4,7 @@
 *.css diff=css
 *.html diff=html
 *.md diff=markdown
-*.php diff=php* text=auto eol=lf
+*.php diff=php
 
 *.php linguist-language=PHP
 *.blade.php linguist-language=PHP
@@ -12,10 +12,16 @@
 *.css linguist-language=CSS
 *.js linguist-language=JavaScript
 
-node_modules/* linguist-vendored
-public/build/* linguist-generated
+# Third-party dependencies, including the bundled frontend libraries.
+/node_modules/** linguist-vendored=true
+/vendor/** linguist-vendored=true
+/public/assets/extensions/** linguist-vendored=true
+/resources/views/assets/extensions/** linguist-vendored=true
 
-public/build/* linguist-generated=true
+# Compiled assets and source maps do not represent application source code.
+/public/build/** linguist-generated=true
+/public/assets/compiled/** linguist-generated=true
+/resources/views/assets/compiled/** linguist-generated=true
 *.map linguist-generated=true
 
 /.github export-ignore
